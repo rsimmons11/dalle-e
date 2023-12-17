@@ -1,24 +1,16 @@
-import express from 'express';
-import * as dotenv from 'dotenv';
-import { Configuration, OpenAIApi } from 'openai';
+// dalleController.js
 
-dotenv.config();
+import { OpenAIApi } from 'openai';
 
-const router = express.Router();
-
-const configuration = new Configuration({
+const openai = new OpenAIApi({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-console.log(process.env.OPENAI_API_KEY);
-
-const openai = new OpenAIApi(configuration);
-
-router.route('/').get((req, res) => {
+export const getHelloMessage = (req, res) => {
   res.status(200).json({ message: 'Hello from DALL-E!' });
-});
+};
 
-router.route('/').post(async (req, res) => {
+export const postImage = async (req, res) => {
   try {
     const { prompt } = req.body;
 
@@ -35,6 +27,4 @@ router.route('/').post(async (req, res) => {
     console.error(error);
     res.status(500).send(error?.response.data.error.message || 'Something went wrong');
   }
-});
-
-export default router;
+};

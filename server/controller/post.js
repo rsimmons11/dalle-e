@@ -2,7 +2,7 @@ import express from 'express'
 import * as dotenv from 'dotenv'
 import { v2 as cloudinary } from 'cloudinary'
 
-import Post from '../mongodb/models/post.js'
+import Post from '../models/post.js'
 
 dotenv.config()
 
@@ -14,23 +14,20 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-
-//GET ALL POST
-router.route('/').get(async (req, res) => {
+// Get Posts
+export const getPosts = async (req, res) => {
   try {
     const posts = await Post.find({});
     res.status(200).json({ success: true, data: posts });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Fetching posts failed, please try again' });
   }
-});
-
-
+}
 
 
 
 // CREATE A POST
-router.route('/').post(async (req, res) => {
+ export const createPost = async (req, res) => {
   try {
     const { name, prompt, photo } = req.body;
     const photoUrl = await cloudinary.uploader.upload(photo);
@@ -45,6 +42,5 @@ router.route('/').post(async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, message: error })
   }
-});
+}
 
-export default router;
