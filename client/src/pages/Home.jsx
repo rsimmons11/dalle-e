@@ -1,20 +1,29 @@
+// Import the necessary libraries and components
 import React, { useEffect, useState } from 'react';
 
+// Import the 'Card', 'FormField', and 'Loader' components from '../components'
 import { Card, FormField, Loader } from '../components';
 
+// Define the 'RenderCards' component that takes 'data' and 'title' as props
 const RenderCards = ({ data, title }) => {
+  // Check if the 'data' array exists and has elements
   if (data?.length > 0) {
+    // If there are elements in 'data', map over each post and render a 'Card' component
     return (
       data.map((post) => <Card key={post._id} {...post} />)
     );
   }
 
+  // If there are no elements in 'data', render a message with the provided 'title'
   return (
     <h2 className="mt-5 font-bold text-[#6469ff] text-xl uppercase">{title}</h2>
   );
 };
 
+
+// Define the 'Home' component
 const Home = () => {
+  // State to manage loading status, all posts, search text, search timeout, and searched results
   const [loading, setLoading] = useState(false);
   const [allPosts, setAllPosts] = useState(null);
 
@@ -22,6 +31,7 @@ const Home = () => {
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState(null);
 
+  // Function to fetch all posts from the server
   const fetchPosts = async () => {
     setLoading(true);
 
@@ -33,27 +43,37 @@ const Home = () => {
         },
       });
 
+      // If the response is successful, update the 'allPosts' state with the data
       if (response.ok) {
         const result = await response.json();
         setAllPosts(result.data.reverse());
       }
     } catch (err) {
+      // Display an alert if there is an error during the fetching process
       alert(err);
     } finally {
+      // Set the loading state to indicate that the fetching process is complete
       setLoading(false);
     }
   };
 
+  // useEffect hook to fetch posts when the component mounts
   useEffect(() => {
     fetchPosts();
   }, []);
 
+  // Function to handle changes in the search input
   const handleSearchChange = (e) => {
+    // Clear the existing search timeout
     clearTimeout(searchTimeout);
+
+    // Update the 'searchText' state with the input value
     setSearchText(e.target.value);
 
+    // Set a new search timeout to delay the search until the user stops typing
     setSearchTimeout(
       setTimeout(() => {
+        // Filter the posts based on the search text and update the 'searchedResults' state
         const searchResult = allPosts.filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()) || item.prompt.toLowerCase().includes(searchText.toLowerCase()));
         setSearchedResults(searchResult);
       }, 500),
