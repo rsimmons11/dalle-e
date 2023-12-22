@@ -42,7 +42,7 @@ const generateImage = async () => {
       setGeneratingImg(true);
 
       // Send a POST request to the DALL-E API with the provided prompt
-      const response = await fetch('http://localhost:8080/api/v1/dalle', {
+      const response = await fetch('https://imagegen-1nel.onrender.com/api/v1/dalle', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const handleSubmit = async (e) => {
 
     try {
       // Send a POST request to the server with the form data
-      const response = await fetch('http://localhost:8080/api/v1/post', {
+      const response = await fetch('https://imagegen-1nel.onrender.com/api/v1/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
