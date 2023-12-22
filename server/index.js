@@ -37,14 +37,17 @@ app.get('/', async (req, res) => {
   });
 });
 
+const PORT = process.env.PORT|| 8080;
+
 // Define an asynchronous function to start the server
 const startServer = async () => {
   try {
     // Connect to the MongoDB database using the 'connectDB' function and the MongoDB URL from the environment variables
     connectDB(process.env.MONGODB_URL);
 
+
     // Start the Express application on port 8080 and log a message when the server is started
-    app.listen(8080, () => console.log('Server started on port 8080'));
+    app.listen(PORT, () => console.log('Server started on port 8080'));
   } catch (error) {
     // Log any errors that occur during the server startup process
     console.log(error);
