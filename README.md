@@ -18,11 +18,6 @@ Welcome to Visual Forge, an AI-powered DALL-E clone that sparks creativity and e
 - Provide prompts to generate unique images.
 - Explore and download your creations.
 
-## Contributors
-- [Your Name](https://github.com/your-username)
-- [Contributor 1](https://github.com/contributor-1)
-- [Contributor 2](https://github.com/contributor-2)
-
 ## License
 This project is licensed under the [MIT License](LICENSE).
 
